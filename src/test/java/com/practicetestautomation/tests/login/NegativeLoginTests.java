@@ -4,8 +4,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 public class NegativeLoginTests {
     @Test
@@ -24,7 +28,8 @@ public class NegativeLoginTests {
         submitBtn.click();
 
         // Verify error message is displayed
-        WebElement errorMessage = driver.findElement(By.id("error"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("error")));
         Assert.assertTrue(errorMessage.isDisplayed());
 
         // Verify error message text is Your username is invalid!
@@ -52,7 +57,8 @@ public class NegativeLoginTests {
         submitBtn.click();
 
         // Verify error message is displayed
-        WebElement errorMessage = driver.findElement(By.id("error"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("error")));
         Assert.assertTrue(errorMessage.isDisplayed());
 
         // Verify error message text is Your password is invalid!
