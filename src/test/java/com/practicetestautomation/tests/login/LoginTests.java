@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -14,7 +15,20 @@ public class LoginTests {
     private WebDriver driver;
 
     @BeforeMethod(alwaysRun = true)
-    public void setUp(){
+    @Parameters("browser")
+    public void setUp(String browser){
+        System.out.println("Running test in " + browser);
+        switch (browser.toLowerCase()){
+            case "chrome":
+                driver = new ChromeDriver();
+                break;
+            case "firefox":
+                driver = new FirefoxDriver();
+                break;
+            default:
+                driver = new ChromeDriver();
+                break;
+        }
         // Open page
         driver = new ChromeDriver();
         driver.get("https://practicetestautomation.com/practice-test-login/");
@@ -27,11 +41,9 @@ public class LoginTests {
 
     @Test(groups = {"positive", "regression", "smoke"})
     public void testLoginFunctionality(){
-
         // Type username student into Username field
         // Type password Password123 into Password field
         // Push Submit button
-
         WebElement usernameInput = driver.findElement(By.id("username"));
         WebElement passwordInput = driver.findElement(By.id("password"));
         WebElement submitBtn = driver.findElement(By.id("submit"));
