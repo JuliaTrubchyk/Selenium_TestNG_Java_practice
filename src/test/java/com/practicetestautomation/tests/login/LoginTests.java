@@ -16,7 +16,7 @@ public class LoginTests {
 
     @BeforeMethod(alwaysRun = true)
     @Parameters("browser")
-    public void setUp(String browser){
+    public void setUp(@Optional("chrome") String browser){
         System.out.println("Running test in " + browser);
         switch (browser.toLowerCase()){
             case "chrome":
@@ -26,6 +26,7 @@ public class LoginTests {
                 driver = new FirefoxDriver();
                 break;
             default:
+                System.out.println("configuration for " + browser + " is missing so running tests in Chrome by defauld");
                 driver = new ChromeDriver();
                 break;
         }
