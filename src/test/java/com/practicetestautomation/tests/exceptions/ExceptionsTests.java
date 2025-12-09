@@ -35,9 +35,6 @@ public class ExceptionsTests {
                 break;
         }
 
-        // tells Selenium to wait up to 10 seconds for an element to appear before throwing timing Exceptions
-
-
         // Open page
         driver.get("https://practicetestautomation.com/practice-test-exceptions/");
     }
@@ -86,4 +83,26 @@ public class ExceptionsTests {
         Assert.assertEquals(actualMessage, expectedMessage, "Message is not expected");
     }
 
+    @Test
+    public void invalidElementStateExceptionTest(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
+        // Clear input field
+        WebElement row1InputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='row1']/input")));
+        WebElement editButton = driver.findElement(By.id("edit_btn"));
+        editButton.click();
+        row1InputField.clear();
+
+        // Type text into the input field
+        row1InputField.sendKeys("test text");
+
+        // Push Save button using locator By.name(“Save”)
+        WebElement saveButton = driver.findElement(By.xpath("//div[@id='row1']/button[@name='Save']"));
+        saveButton.click();
+
+        // Verify text changed
+        WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("confirmation")));
+        String actualMessage = successMessage.getText();
+        String expectedMessage = "Row 1 was saved";
+        Assert.assertEquals(actualMessage, expectedMessage, "Message is not expected");
+    }
 }
