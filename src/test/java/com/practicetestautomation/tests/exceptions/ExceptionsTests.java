@@ -6,6 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.time.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,8 +32,11 @@ public class ExceptionsTests {
                 driver = new ChromeDriver();
                 break;
         }
+
+        // tells Selenium to wait up to 10 seconds for an element to appear before throwing timing Exceptions
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+
         // Open page
-        driver = new ChromeDriver();
         driver.get("https://practicetestautomation.com/practice-test-exceptions/");
     }
 
@@ -47,12 +51,8 @@ public class ExceptionsTests {
         // Click Add button
         WebElement addButton = driver.findElement(By.id("add_btn"));
         addButton.click();
-        try {
-            Thread.sleep(7000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         // Verify Row 2 input field is displayed
+
         WebElement row2InputField = driver.findElement(By.xpath("//div[@id='row2']/input"));
         Assert.assertTrue(row2InputField.isDisplayed(), "Row 2 input field is not displayed");
     }
