@@ -105,4 +105,16 @@ public class ExceptionsTests {
         String expectedMessage = "Row 1 was saved";
         Assert.assertEquals(actualMessage, expectedMessage, "Message is not expected");
     }
+
+    @Test
+    public void staleElementReferenceExceptionTest(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
+
+        // Click Add button
+        WebElement addButton = driver.findElement(By.id("add_btn"));
+        addButton.click();
+
+        // Verify instruction text element is no longer displayed
+        Assert.assertTrue(wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("instructions"))));
+    }
 }
