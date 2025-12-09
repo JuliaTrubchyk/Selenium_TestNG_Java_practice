@@ -3,6 +3,8 @@ package com.practicetestautomation.tests.exceptions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -34,7 +36,7 @@ public class ExceptionsTests {
         }
 
         // tells Selenium to wait up to 10 seconds for an element to appear before throwing timing Exceptions
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+
 
         // Open page
         driver.get("https://practicetestautomation.com/practice-test-exceptions/");
@@ -48,12 +50,14 @@ public class ExceptionsTests {
 
     @Test
     public void noSuchElementExceptionTest() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
         // Click Add button
         WebElement addButton = driver.findElement(By.id("add_btn"));
         addButton.click();
-        // Verify Row 2 input field is displayed
 
-        WebElement row2InputField = driver.findElement(By.xpath("//div[@id='row2']/input"));
+        WebElement row2InputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='row2']/input")));
+        // Verify Row 2 input field is displayed
         Assert.assertTrue(row2InputField.isDisplayed(), "Row 2 input field is not displayed");
     }
 
