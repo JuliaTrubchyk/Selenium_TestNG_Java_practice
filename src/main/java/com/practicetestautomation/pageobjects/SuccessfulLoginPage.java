@@ -16,13 +16,6 @@ public class SuccessfulLoginPage {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-    public String getCurrentUrl(){
-        return driver.getCurrentUrl();
-    }
-
-    public String getPageSource(){
-        return getPageSource();
-    }
 
     public boolean isLogOutBtnDisplayed(){
         try {
