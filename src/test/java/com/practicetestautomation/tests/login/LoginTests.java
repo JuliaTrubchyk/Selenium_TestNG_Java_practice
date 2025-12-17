@@ -63,27 +63,9 @@ public class LoginTests {
     @Test(groups = {"negative", "regression"})
     public void negativeLoginTest(String username, String password, String expectedErrorMessage){
         logger.info("Starting negativeLoginTest");
-        // Type username incorrectUser into Username field
-        // Type password Password123 into Password field
-        WebElement usernameInput = driver.findElement(By.id("username"));
-        logger.info("Type username: " + username);
-        WebElement passwordInput = driver.findElement(By.id("password"));
-        logger.info("Type password");
-        usernameInput.sendKeys(username);
-        passwordInput.sendKeys(password);
-        // Push Submit button
-        WebElement submitBtn = driver.findElement(By.id("submit"));
-        logger.info("Click Submit button");
-        submitBtn.click();
-
-        logger.info("Verify the expected error message: " + expectedErrorMessage);
-        // Verify error message is displayed
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("error")));
-        Assert.assertTrue(errorMessage.isDisplayed());
-
-        // Verify error message text is Your username is invalid!
-        String actualErrorMsg = errorMessage.getText();
-        Assert.assertEquals(actualErrorMsg, expectedErrorMessage);
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.visit();
+        loginPage.executeLogin(username, password);
+        Assert.assertEquals(loginPage.getErrorMessage(), expectedErrorMessage);;
     }
 }
