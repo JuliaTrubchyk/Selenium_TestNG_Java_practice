@@ -2,6 +2,7 @@ package com.practicetestautomation.tests.login;
 
 import com.practicetestautomation.pageobjects.LoginPage;
 import com.practicetestautomation.pageobjects.SuccessfulLoginPage;
+import com.practicetestautomation.tests.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -10,35 +11,7 @@ import org.testng.annotations.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class LoginTests {
-    private WebDriver driver;
-    private Logger logger;
-
-    @BeforeMethod(alwaysRun = true)
-    @Parameters("browser")
-    public void setUp(@Optional("chrome") String browser){
-        logger = Logger.getLogger(LoginTests.class.getName());
-        logger.setLevel(Level.INFO);
-        logger.info("Running test in " + browser);
-        switch (browser.toLowerCase()){
-            case "chrome":
-                driver = new ChromeDriver();
-                break;
-            case "firefox":
-                driver = new FirefoxDriver();
-                break;
-            default:
-                logger.warning("configuration for " + browser + " is missing so running tests in Chrome by defauld");
-                driver = new ChromeDriver();
-                break;
-        }
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void tearDown(){
-        driver.quit();
-        logger.info("Browser is closed");
-    }
+public class LoginTests extends BaseTest {
 
     @Test(groups = {"positive", "regression", "smoke"})
     public void testLoginFunctionality(){
